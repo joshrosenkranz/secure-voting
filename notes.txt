@@ -1,0 +1,21 @@
+Problem: Decentralized voting
+-Want an electronic voting system that registers votes and returns some sort of hash to the user with the following properties
+    -Property 1: A user can verify that their hash corresponds to the vote they cast but someone else cannot decipher that information from the hash
+    -Property 2: Knowing all the public hashes for some set of voters allows an independent party to verify the total vote count (how big should this set be? The entire set? Maybe at the county level? Maybe a fixed size?)
+-Other considerations
+    -Consideration 1: System should be able to generate these hashes on the fly
+    -Consideration 2: System should still function without 100% voting participation
+
+Idea 1: Total vote count represented as trinary array (yes, no, no vote), each person when they vote gets an index in that array encrypted with their public key
+-Satisfies property 1
+-I guess satisfies property 2 because verification just involves counting number of 'yes' trits in trinary array
+Problem 1: How do you make sure that everyone has different indices? Could just give all the yes voters the same index and give the appearance that only one person voted yes
+
+Thoughts on Problem 1: Could you use some sort of hashing to check if two people got assigned the same index? 
+-Idea 1.1: Return one_way_hash(index) to user in addition to their encrypted index
+    -But this allows anyone to brute force attack the system and just try every index and correspond that with the name in the public database
+-Idea 1.2:
+    -Give each user a salt and return (salt, one_way_hash(index, salt)) to user
+Problem: with both of these solutions, the effort to brute force one hash is roughly the same as the effort to check each hash because the indexes are easily guessable
+
+What if the identifying hash was a hash of the person's private key?
