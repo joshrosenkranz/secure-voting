@@ -31,7 +31,7 @@ def print_votes(votes):
         print(index_str + "|" + vote_str + "|" + key_str)
 
 #Get government's public key
-with open("PK_gov", "rb") as public_key_file:
+with open("PK_Gov", "rb") as public_key_file:
         public_key_gov = serialization.load_ssh_public_key(
             public_key_file.read(), 
             backend=default_backend()
